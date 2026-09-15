@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Lightbox from './Lightbox.vue'
+import VideoTile from './VideoTile.vue'
+import { isVideo } from '../lib/media'
 
 const props = withDefaults(
   defineProps<{
@@ -38,11 +40,13 @@ const lightboxIndex = ref<number | null>(null)
           v-for="(src, i) in images"
           :key="src"
           type="button"
-          class="cursor-pointer"
-          :aria-label="`View ${title} photo full screen`"
+          class="relative cursor-pointer"
+          :aria-label="`View ${title} ${isVideo(src) ? 'video' : 'photo'} full screen`"
           @click="lightboxIndex = i"
         >
+          <VideoTile v-if="isVideo(src)" :src="src" />
           <img
+            v-else
             :src="src"
             :alt="`${title} photo`"
             loading="lazy"

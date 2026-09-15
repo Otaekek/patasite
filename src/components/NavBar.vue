@@ -12,7 +12,7 @@ const menuOpen = ref(false)
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
     <div class="mx-auto flex max-w-6xl items-center justify-end px-6 py-3">
       <nav class="hidden gap-6 text-sm uppercase tracking-wide text-white/70 sm:flex">
         <a

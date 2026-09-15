@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { isVideo } from '../lib/media'
 
 const props = defineProps<{
   images: string[]
@@ -57,7 +58,18 @@ onUnmounted(() => {
         ‹
       </button>
 
-      <img :src="currentSrc" alt="" class="max-h-[90vh] max-w-[90vw] object-contain" />
+      <!-- keyed by src so switching slides fully remounts the element,
+           guaranteeing autoplay fires again for each new video -->
+      <video
+        v-if="isVideo(currentSrc)"
+        :key="currentSrc"
+        :src="currentSrc"
+        class="max-h-[90vh] max-w-[90vw] object-contain"
+        controls
+        autoplay
+        playsinline
+      ></video>
+      <img v-else :key="currentSrc" :src="currentSrc" alt="" class="max-h-[90vh] max-w-[90vw] object-contain" />
 
       <button
         v-if="images.length > 1"
