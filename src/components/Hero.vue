@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import logo from '../assets/brand/patatrack-logo.png'
+import { isVideo } from '../lib/media'
 
 defineProps<{
   backgroundImage: string
@@ -11,7 +12,17 @@ defineProps<{
     id="top"
     class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden text-center"
   >
+    <video
+      v-if="isVideo(backgroundImage)"
+      :src="backgroundImage"
+      class="absolute inset-0 h-full w-full object-cover"
+      autoplay
+      loop
+      muted
+      playsinline
+    ></video>
     <img
+      v-else
       :src="backgroundImage"
       alt=""
       class="absolute inset-0 h-full w-full object-cover"
