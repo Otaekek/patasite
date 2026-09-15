@@ -3,19 +3,35 @@ import { onMounted, onUnmounted, ref } from 'vue'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
-const VERTEX_SRC = `
-attribute vec2 a_position;
+function loadSortedUrls(glob: Record<string, string>): string[] {
+  return Object.keys(glob)
+    .sort()
+    .map((key) => glob[key])
+}
+const treeUrls = loadSortedUrls(
+  import.meta.glob('/src/assets/shader/trees/*', { eager: true, import: 'default' }),
+)
+const insectUrls = loadSortedUrls(
+  import.meta.glob('/src/assets/shader/insects/*', { eager: true, import: 'default' }),
+)
+
+const VERTEX_SRC = `#version 300 es
+in vec2 a_position;
 void main() {
   gl_Position = vec4(a_position, 0.0, 1.0);
 }
 `
 
-const FRAGMENT_SRC = `
+const FRAGMENT_SRC = `#version 300 es
 precision mediump float;
+out vec4 fragColor;
 uniform vec3 iResolution;
 uniform float iTime;
 uniform float iScroll;
 uniform float iPixelRatio;
+// exposed for further shader work - not sampled anywhere yet
+uniform sampler2D uTrees[5];
+uniform sampler2D uInsects[5];
 #define PI 3.1415926535
 float hash( vec2 p ) {
 	float h = dot(vec2( p) ,vec2(127.1,311.7));	
@@ -77,14 +93,44 @@ float diag(vec2 uv, float si) {
     return smoothstep(s, 0.0, abs(uv.x * si - uv.y) - s / 2.  );
 }
 
+float my_text(vec2 uv, int id) {
+  if (id == 0) {
+    return texture(uTrees[0], uv).a;
+  }
+  if (id == 1) {
+    return texture(uTrees[1], uv).a;
+  }
+  if (id == 2) {
+    return texture(uTrees[2], uv).a;
+  }
+  if (id == 3) {
+    return texture(uTrees[3], uv).a;
+  }
+  if (id == 4) {
+    return texture(uTrees[4], uv).a;
+  }
+}
 void main(  )
 {
     vec2 uv = (-iResolution.xy + 2.0*gl_FragCoord.xy)/iResolution.y;
-    uv *= 10.;
+    uv.y = 1.0 - uv.y;
+    vec2 tuv = uv;
+    uv *= 10.0;
     vec2 id = floor(uv);
+    vec2 tid = floor(uv - .5);
     float r = rand_trigger(uv.xy, id, 1.0);
     uv = fract(uv) - vec2(.5);
+    tuv = fract(uv);
+    int texid = int(hash(tid) * 123.0) % 5;
+    float tex = texture(uTrees[0], tuv * 2.0 - .5).a;
+    tex = my_text(tuv * 2.0 - .5, texid);
+    if (hash(tid) > .1) {
+      tex = 0.;
+    }
+//    tex = floor(uv.x) * -10.0;
  //   r = abs(r);
+
+//    float tex = smoothstep(.1, .0, length(uv + vec2(.5)));
     r = min(1.0, r);
     r = max(-0.0, r);
     float angle = 3.14 * r / 2.;
@@ -94,11 +140,31 @@ void main(  )
     float sd = diag(uv, float(si));
     float ss = truchet(uv + vec2(.5), float(si));
     vec3 col = vec3( mix(sd, ss, 1.) );
-    gl_FragColor = vec4(col * .3 * vec3(.5, 0.1, 1.),1.0);
+    fragColor = vec4(vec3(tex) * .6   +  col * .4 * vec3(.4, 0.2, .4),1.0);
 }
 `
 
-function compileShader(gl: WebGLRenderingContext, type: number, source: string) {
+// loads a single RGBA 2D texture, starting as 1x1 transparent until the
+// image itself finishes loading async
+function loadTexture(gl: WebGL2RenderingContext, url: string): WebGLTexture {
+  const texture = gl.createTexture()!
+  gl.bindTexture(gl.TEXTURE_2D, texture)
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]))
+
+  const image = new Image()
+  image.onload = () => {
+    gl.bindTexture(gl.TEXTURE_2D, texture)
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+  }
+  image.src = url
+  return texture
+}
+
+function compileShader(gl: WebGL2RenderingContext, type: number, source: string) {
   const shader = gl.createShader(type)!
   gl.shaderSource(shader, source)
   gl.compileShader(shader)
@@ -118,8 +184,8 @@ onMounted(() => {
   const canvas = canvasRef.value
   if (!canvas) return
 
-  const gl = canvas.getContext('webgl')
-  if (!gl) return // no WebGL support - the plain dark body background remains
+  const gl = canvas.getContext('webgl2')
+  if (!gl) return // no WebGL2 support - the plain dark body background remains
 
   const vertexShader = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SRC)
   const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SRC)
@@ -148,6 +214,24 @@ onMounted(() => {
   const iTime = gl.getUniformLocation(program, 'iTime')
   const iScroll = gl.getUniformLocation(program, 'iScroll')
   const iPixelRatio = gl.getUniformLocation(program, 'iPixelRatio')
+
+  // uTrees -> texture units 0-4, uInsects -> texture units 5-9
+  const treeTextures = treeUrls.map((url) => loadTexture(gl, url))
+  const insectTextures = insectUrls.map((url) => loadTexture(gl, url))
+  treeTextures.forEach((texture, i) => {
+    gl.activeTexture(gl.TEXTURE0 + i)
+    gl.bindTexture(gl.TEXTURE_2D, texture)
+  })
+  insectTextures.forEach((texture, i) => {
+    gl.activeTexture(gl.TEXTURE0 + treeTextures.length + i)
+    gl.bindTexture(gl.TEXTURE_2D, texture)
+  })
+  treeTextures.forEach((_, i) => {
+    gl.uniform1i(gl.getUniformLocation(program, `uTrees[${i}]`), i)
+  })
+  insectTextures.forEach((_, i) => {
+    gl.uniform1i(gl.getUniformLocation(program, `uInsects[${i}]`), treeTextures.length + i)
+  })
 
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2)
 
