@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Lightbox from './Lightbox.vue'
 import VideoTile from './VideoTile.vue'
+import HighlightedText from './HighlightedText.vue'
 import { isVideo } from '../lib/media'
 
 const props = withDefaults(
@@ -20,9 +21,9 @@ const lightboxIndex = ref<number | null>(null)
 </script>
 
 <template>
-  <section :id="id" class="mx-auto max-w-7xl scroll-mt-20 xl:max-w-none px-6 py-16">
-    <div class="grid gap-10 md:grid-cols-[minmax(0,260px)_1fr] md:gap-16 xl:grid-cols-[minmax(240px,1fr)_minmax(0,56rem)_minmax(240px,1fr)] xl:gap-12">
-      <div class="min-w-0 md:sticky md:top-24 md:self-start xl:w-full xl:max-w-[300px] xl:justify-self-end">
+  <section :id="id" class="mx-auto max-w-7xl scroll-mt-20 px-6 py-16">
+    <div class="grid gap-10 md:grid-cols-[minmax(0,260px)_1fr] md:gap-16">
+      <div class="min-w-0 md:sticky md:top-24 md:self-start">
         <div class="flex min-w-0 items-center gap-3">
           <img
             :src="icon"
@@ -30,9 +31,9 @@ const lightboxIndex = ref<number | null>(null)
             :style="{ objectPosition: props.iconPosition }"
             class="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-white/15"
           />
-          <h2 class="font-display min-w-0 text-3xl tracking-tight text-white/90">{{ title }}</h2>
+          <h2 class="font-display title-glow min-w-0 text-3xl tracking-tight text-white">{{ title }}</h2>
         </div>
-        <p class="mt-4 text-white/60">{{ description }}</p>
+        <p class="mt-4 text-white/60"><HighlightedText :text="description" /></p>
       </div>
 
       <div v-if="images.length" class="grid grid-cols-1 gap-4 sm:grid-cols-2">

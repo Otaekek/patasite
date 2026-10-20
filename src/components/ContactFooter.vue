@@ -9,7 +9,7 @@
       href="https://www.instagram.com/pa.ta.track/"
       target="_blank"
       rel="noopener noreferrer"
-      class="flex items-center gap-2 rounded px-3 py-1 text-sm text-white/75 transition-colors hover:text-white"
+      class="flex items-center gap-2 rounded px-3 py-1 text-sm text-neon-violet transition hover:text-neon-cyan hover:text-glow"
     >
       <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true">
         <path
@@ -21,7 +21,7 @@
 
     <a
       href="mailto:patatrackboum@protonmail.com"
-      class="flex items-center gap-2 rounded px-3 py-1 text-sm text-white/75 transition-colors hover:text-white"
+      class="flex items-center gap-2 rounded px-3 py-1 text-sm text-neon-violet transition hover:text-neon-cyan hover:text-glow"
     >
       <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
         <rect x="2.5" y="5" width="19" height="14" rx="2" />

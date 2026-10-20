@@ -6,10 +6,14 @@ import musicSrc from '../assets/audio/cosma-yok-yok.mp3'
 import noteEighth from '../assets/notes/note-eighth.svg'
 import noteBeamed from '../assets/notes/note-beamed.svg'
 import noteQuarter from '../assets/notes/note-quarter.svg'
+import HighlightedText from './HighlightedText.vue'
 
 defineProps<{
   backgroundImage: string
 }>()
+
+const tagline =
+  "Issu de la *free party*, Patatrack est un collectif qui épouse son environnement pour emmener son public dans une *ambiance onirique*, fondée sur la bienveillance, l'échange et le lâcher-prise. Créé par des personnes passionnées, nous avons créé notre propre système son, lumière, VJing, et divers éléments de scénographie... N'hésitez pas à *nous contacter* si vous souhaitez collaborer avec nous."
 
 const noteIcons = [noteEighth, noteBeamed, noteQuarter]
 const MUSIC_START_TIME = 23
@@ -113,11 +117,7 @@ const cursorStyle = computed(() => (isPlaying.value ? stopCursor : playCursor))
       </button>
 
       <p class="max-w-xl text-balance text-lg leading-relaxed text-white/75">
-        Issu de la free party, Patatrack est un collectif qui épouse son environnement pour
-        emmener son public dans une ambiance onirique, fondée sur la bienveillance,
-        l'échange et le lâcher-prise. Créé par des personnes passionnées, nous avons créé
-        notre propre système son, lumière, VJing, et divers éléments de scénographie...
-        N'hésitez pas à nous contacter si vous souhaitez collaborer avec nous.
+        <HighlightedText :text="tagline" />
       </p>
     </div>
 

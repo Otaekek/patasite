@@ -2,6 +2,25 @@
 
 @theme {
   --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+
+  /* Neon palette - purple to blue */
+  --color-neon-purple: #c04dff;
+  --color-neon-violet: #8b5cff;
+  --color-neon-blue: #4d7cff;
+  --color-neon-cyan: #3de0ff;
+}
+
+@utility text-glow {
+  text-shadow: 0 0 10px color-mix(in oklab, currentColor 55%, transparent);
+}
+
+/* Neon-tube look: white core, purple halo fading into blue */
+@utility title-glow {
+  text-shadow:
+    0 0 2px rgb(255 255 255 / 0.6),
+    0 0 10px var(--color-neon-purple),
+    0 0 24px color-mix(in oklab, var(--color-neon-violet) 70%, transparent),
+    0 0 48px color-mix(in oklab, var(--color-neon-blue) 50%, transparent);
 }
 
 html {

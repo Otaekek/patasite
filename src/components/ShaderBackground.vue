@@ -140,7 +140,7 @@ void main(  )
     float sd = diag(uv, float(si));
     float ss = truchet(uv + vec2(.5), float(si));
     vec3 col = vec3( mix(sd, ss, 1.) );
-    fragColor = vec4(vec3(tex) * .6   +  col * .4 * vec3(.1, 0.4, .2),1.0);
+    fragColor = vec4(vec3(tex) * .6   +  col * .4 * vec3(.3, 0.1, .2),1.0);
 }
 `
 
