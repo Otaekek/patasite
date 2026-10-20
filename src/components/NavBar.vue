@@ -4,7 +4,6 @@ import { ref } from 'vue'
 const links = [
   { id: 'scenography', label: 'Scénographie' },
   { id: 'sound', label: 'Son' },
-  { id: 'light', label: 'Lumière' },
   { id: 'mapping', label: 'Mapping' },
 ]
 
