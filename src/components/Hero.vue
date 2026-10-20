@@ -13,7 +13,7 @@ defineProps<{
 }>()
 
 const tagline =
-  "Issu de la *free party*, Patatrack est un collectif qui épouse son environnement pour emmener son public dans une *ambiance onirique*, fondée sur la bienveillance, l'échange et le lâcher-prise. Créé par des personnes passionnées, nous avons créé notre propre système son, lumière, VJing, et divers éléments de scénographie... N'hésitez pas à *nous contacter* si vous souhaitez collaborer avec nous."
+  "Issu de free parties, Patatrack est un collectif d'ami.e.s qui transporte son public dans une ambiance onirique, fondée sur la bienveillance, l'échange et le lâcher-prise. Géré par des personnes passionnées, nous avons créé notre propre système son, lumières, VJing, et autres éléments de scénographie. Contactez nous pour discuter de votre projet !"
 
 const noteIcons = [noteEighth, noteBeamed, noteQuarter]
 const MUSIC_START_TIME = 23
