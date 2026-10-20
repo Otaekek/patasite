@@ -40,7 +40,7 @@ const lightboxIndex = ref<number | null>(null)
           v-for="(src, i) in images"
           :key="src"
           type="button"
-          class="relative cursor-pointer"
+          class="relative cursor-pointer rounded-[2rem] transition duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:z-10 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(255,255,255,0.12)]"
           :class="{ 'sm:col-span-2': i === 0 }"
           :aria-label="`View ${title} ${isVideo(src) ? 'video' : 'photo'} full screen`"
           @click="lightboxIndex = i"
@@ -51,7 +51,7 @@ const lightboxIndex = ref<number | null>(null)
             :src="src"
             :alt="`${title} photo`"
             loading="lazy"
-            class="w-full rounded object-cover transition hover:opacity-90"
+            class="w-full rounded-[2rem] object-cover"
             :class="i === 0 ? 'aspect-[2/1]' : 'aspect-square'"
           />
         </button>
