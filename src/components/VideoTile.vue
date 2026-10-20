@@ -1,11 +1,13 @@
 <script setup lang="ts">
 defineProps<{
   src: string
+  wide?: boolean
 }>()
 </script>
 
 <template>
-  <video :src="src" class="aspect-square w-full rounded object-cover" preload="metadata" muted playsinline></video>
+  <video :src="src" class="w-full rounded object-cover"
+    :class="wide ? 'aspect-[2/1]' : 'aspect-square'" preload="metadata" muted playsinline></video>
 
   <div class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/20">
     <svg viewBox="0 0 24 24" class="h-14 w-14 drop-shadow-lg" aria-hidden="true">

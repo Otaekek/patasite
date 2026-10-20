@@ -20,9 +20,9 @@ const lightboxIndex = ref<number | null>(null)
 </script>
 
 <template>
-  <section :id="id" class="mx-auto max-w-7xl scroll-mt-20 px-6 py-16">
-    <div class="grid gap-10 md:grid-cols-[minmax(0,260px)_1fr] md:gap-16">
-      <div class="min-w-0 md:sticky md:top-24 md:self-start">
+  <section :id="id" class="mx-auto max-w-7xl scroll-mt-20 xl:max-w-none px-6 py-16">
+    <div class="grid gap-10 md:grid-cols-[minmax(0,260px)_1fr] md:gap-16 xl:grid-cols-[minmax(240px,1fr)_minmax(0,56rem)_minmax(240px,1fr)] xl:gap-12">
+      <div class="min-w-0 md:sticky md:top-24 md:self-start xl:w-full xl:max-w-[300px] xl:justify-self-end">
         <div class="flex min-w-0 items-center gap-3">
           <img
             :src="icon"
@@ -41,16 +41,18 @@ const lightboxIndex = ref<number | null>(null)
           :key="src"
           type="button"
           class="relative cursor-pointer"
+          :class="{ 'sm:col-span-2': i === 0 }"
           :aria-label="`View ${title} ${isVideo(src) ? 'video' : 'photo'} full screen`"
           @click="lightboxIndex = i"
         >
-          <VideoTile v-if="isVideo(src)" :src="src" />
+          <VideoTile v-if="isVideo(src)" :src="src" :wide="i === 0" />
           <img
             v-else
             :src="src"
             :alt="`${title} photo`"
             loading="lazy"
-            class="aspect-square w-full rounded object-cover transition hover:opacity-90"
+            class="w-full rounded object-cover transition hover:opacity-90"
+            :class="i === 0 ? 'aspect-[2/1]' : 'aspect-square'"
           />
         </button>
       </div>

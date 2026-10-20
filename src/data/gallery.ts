@@ -1,7 +1,7 @@
-import iconScenography from '../assets/gallery/logos/patasceno.png'
-import iconSound from '../assets/gallery/logos/patasound.png'
-import iconLight from '../assets/gallery/logos/patalight.png'
-import iconMapping from '../assets/gallery/logos/patamapping.png'
+import iconScenography from '../assets/gallery/logos/patasceno.jpg'
+import iconSound from '../assets/gallery/logos/patasound.jpg'
+import iconLight from '../assets/gallery/logos/patalight.jpg'
+import iconMapping from '../assets/gallery/logos/patamapping.jpg'
 
 // Auto-loads every photo dropped into src/assets/gallery/<section>/ - no
 // code change needed to add/remove photos, just add files to the folder.
@@ -50,18 +50,18 @@ export const gallerySections: GallerySection[] = [
     id: 'sound',
     title: 'Sound System',
     description:
-      'Nous avons créé notre propre système son Paraflex de 5 kW à la main, orienté autour de basses profondes et de kicks puissants.',
+      'Nous avons fabriqué notre système son à très haut rendement pouvant sonoriser des scènes jusqu’à 300-400 personnes. Il s’agit d’un système son de type Paraflex (sub et kick) avec des pavillons (aigu) que nous avons désigné. Nous pouvons régler le système son dans différente configuration (mono / stéréo / boiler) pour s’adapter au mieux au public et à la scénographie',
     icon: iconSound,
     images: soundImages,
   },
-  {
-    id: 'light',
-    title: 'Lumière',
-    description:
-      'Patatrack dispose de sa propre régie light avec ses lumières, lasers, et autres éléments de scénographie lumineux.',
-    icon: iconLight,
-    images: lightImages,
-  },
+  // {
+  //   id: 'light',
+  //   title: 'Lumière',
+  //   description:
+  //     'Patatrack dispose de sa propre régie light avec ses lumières, lasers, et autres éléments de scénographie lumineux.',
+  //   icon: iconLight,
+  //   images: lightImages,
+  // },
   {
     id: 'mapping',
     title: 'Mapping',
