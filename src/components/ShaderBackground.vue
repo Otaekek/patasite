@@ -135,7 +135,7 @@ void main(  )
     r = max(-0.0, r);
     float angle = 3.14 * r / 2.;
     uv *= rotate2d(angle);
-    int si = -1;//hashi(id) % 2 == 0 ? -1 : 1;
+    int si = hashi(id) % 2 == 0 ? -1 : 1;
     float t = rand_trigger(vec2(21.), vec2(42.), 1. );
     float sd = diag(uv, float(si));
     float ss = truchet(uv + vec2(.5), float(si));
