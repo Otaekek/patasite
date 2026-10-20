@@ -24,7 +24,7 @@ const lightboxIndex = ref<number | null>(null)
   <section :id="id" class="mx-auto max-w-7xl scroll-mt-20 px-6 py-16">
     <div class="grid gap-10 md:grid-cols-[minmax(0,260px)_1fr] md:gap-12 lg:grid-cols-[minmax(0,360px)_1fr]">
       <div class="min-w-0 md:sticky md:top-24 md:self-start">
-        <div class="flex min-w-0 flex-col items-center gap-4 text-center">
+        <div class="relative z-10 flex min-w-0 flex-col items-center gap-4 text-center">
           <img
             :src="icon"
             :alt="`${title} icon`"
@@ -33,7 +33,14 @@ const lightboxIndex = ref<number | null>(null)
           />
           <h2 class="font-display title-glow min-w-0 text-3xl tracking-tight text-white">{{ title }}</h2>
         </div>
-        <p class="font-body mt-4 text-lg leading-relaxed text-soft"><HighlightedText :text="description" /></p>
+        <div class="relative isolate mt-4">
+          <!-- Hides the background pattern behind the text, fading it back in at the edges -->
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute -inset-x-6 -inset-y-12 -z-10 md:-inset-x-16 bg-[radial-gradient(closest-side,#000_60%,transparent)]"
+          ></div>
+          <p class="font-body text-lg leading-relaxed text-soft"><HighlightedText :text="description" /></p>
+        </div>
       </div>
 
       <div v-if="images.length" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
