@@ -22,18 +22,18 @@ const lightboxIndex = ref<number | null>(null)
 
 <template>
   <section :id="id" class="mx-auto max-w-7xl scroll-mt-20 px-6 py-16">
-    <div class="grid gap-10 md:grid-cols-[minmax(0,260px)_1fr] md:gap-16">
+    <div class="grid gap-10 md:grid-cols-[minmax(0,260px)_1fr] md:gap-12 lg:grid-cols-[minmax(0,360px)_1fr]">
       <div class="min-w-0 md:sticky md:top-24 md:self-start">
-        <div class="flex min-w-0 items-center gap-3">
+        <div class="flex min-w-0 flex-col items-center gap-4 text-center">
           <img
             :src="icon"
             :alt="`${title} icon`"
             :style="{ objectPosition: props.iconPosition }"
-            class="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-white/15"
+            class="h-24 w-24 shrink-0 rounded-full object-cover ring-1 ring-white/15"
           />
           <h2 class="font-display title-glow min-w-0 text-3xl tracking-tight text-white">{{ title }}</h2>
         </div>
-        <p class="mt-4 text-white/60"><HighlightedText :text="description" /></p>
+        <p class="font-body mt-4 text-lg leading-relaxed text-soft"><HighlightedText :text="description" /></p>
       </div>
 
       <div v-if="images.length" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -41,8 +41,12 @@ const lightboxIndex = ref<number | null>(null)
           v-for="(src, i) in images"
           :key="src"
           type="button"
-          class="relative cursor-pointer rounded-[2rem] transition-[transform,box-shadow] duration-300 ease-out will-change-transform backface-hidden hover:z-10 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(255,255,255,0.12)]"
-          :class="{ 'sm:col-span-2': i === 0 }"
+          class="relative cursor-pointer rounded-[2rem] transition-[transform,box-shadow] duration-300 ease-out will-change-transform backface-hidden hover:z-10 hover:scale-[1.03]"
+          :class="
+            i === 0
+              ? 'shadow-[0_0_24px_-6px_var(--color-neon-purple),0_0_60px_-12px_var(--color-neon-blue)] hover:shadow-[0_0_32px_-4px_var(--color-neon-purple),0_0_80px_-8px_var(--color-neon-blue)] sm:col-span-2'
+              : 'hover:shadow-[0_0_40px_rgba(255,255,255,0.12)]'
+          "
           :aria-label="`View ${title} ${isVideo(src) ? 'video' : 'photo'} full screen`"
           @click="lightboxIndex = i"
         >

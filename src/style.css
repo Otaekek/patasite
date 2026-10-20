@@ -1,7 +1,10 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
 
 @theme {
   --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --color-soft: #c9cad8;
 
   /* Neon palette - purple to blue */
   --color-neon-purple: #c04dff;

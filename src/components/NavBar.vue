@@ -23,8 +23,8 @@ onMounted(() => {
     },
     { rootMargin: '-50% 0px -50% 0px' },
   )
-  for (const link of links) {
-    const el = document.getElementById(link.id)
+  for (const id of ['top', ...links.map((link) => link.id)]) {
+    const el = document.getElementById(id)
     if (el) observer.observe(el)
   }
 })
@@ -40,7 +40,16 @@ function linkClass(id: string) {
 
 <template>
   <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
-    <div class="mx-auto flex max-w-6xl items-center justify-end px-6 py-3">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+      <a
+        href="#top"
+        class="font-body text-lg font-extrabold uppercase tracking-wider transition"
+        :class="activeId === 'top' ? 'text-neon-cyan text-glow' : 'text-white hover:text-neon-cyan hover:text-glow'"
+        :aria-current="activeId === 'top' ? 'location' : undefined"
+      >
+        Patatrack
+      </a>
+
       <nav class="hidden gap-6 text-sm uppercase tracking-wide sm:flex">
         <a
           v-for="link in links"

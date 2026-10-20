@@ -52,6 +52,7 @@ export const gallerySections: GallerySection[] = [
     description:
       'Nous avons fabriqué notre système son à très haut rendement pouvant sonoriser des scènes jusqu’à *300-400 personnes*. Il s’agit d’un système son de type *Paraflex* (sub et kick) avec des pavillons (aigu) que nous avons désigné. Nous pouvons régler le système son dans différentes configuration (mono / stéréo / boiler) pour s’adapter au mieux au publique et à la scénographie',
     icon: iconSound,
+    iconPosition: 'center 41%',
     images: soundImages,
   },
   // {
