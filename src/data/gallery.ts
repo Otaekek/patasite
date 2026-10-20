@@ -1,6 +1,6 @@
 import iconScenography from '../assets/gallery/logos/patasceno.jpg'
 import iconSound from '../assets/gallery/logos/patasound.jpg'
-import iconLight from '../assets/gallery/logos/patalight.jpg'
+// import iconLight from '../assets/gallery/logos/patalight.jpg'
 import iconMapping from '../assets/gallery/logos/patamapping.jpg'
 
 // Auto-loads every photo dropped into src/assets/gallery/<section>/ - no
@@ -14,9 +14,9 @@ function loadSection(glob: Record<string, string>): string[] {
 const soundImages = loadSection(
   import.meta.glob('/src/assets/gallery/sound/*', { eager: true, import: 'default' }),
 )
-const lightImages = loadSection(
-  import.meta.glob('/src/assets/gallery/light/*', { eager: true, import: 'default' }),
-)
+// const lightImages = loadSection(
+//   import.meta.glob('/src/assets/gallery/light/*', { eager: true, import: 'default' }),
+// )
 const scenographyImages = loadSection(
   import.meta.glob('/src/assets/gallery/scenography/*', { eager: true, import: 'default' }),
 )
