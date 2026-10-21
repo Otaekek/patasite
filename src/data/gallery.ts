@@ -41,7 +41,7 @@ export const gallerySections: GallerySection[] = [
     id: 'scenography',
     title: 'Scénographie',
     description:
-      "Nous avons notre propre panoplie d'éléments visuels : dômes, méduses, lanternes, lights... Nous sommes habitués à changer régulièrement de scénographie en fonction des inspirations et de nos événements, nous pouvons déployer une très belle scène dans *n'importe quel espace* en *toute autonomie*.",
+      "Nous avons toute une panoplie d'éléments visuels faits maison: dômes, méduses, lanternes, triangles lumineux... Chaque scénographie est conçue *selon l'événement*: le lieu, un thème, ou autres inspirations. Nous pouvons être *autonomes* sur l'étude et l'installation.",
     icon: iconScenography,
     iconPosition: 'center 32%',
     images: scenographyImages,
